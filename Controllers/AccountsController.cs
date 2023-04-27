@@ -59,6 +59,7 @@ namespace ChatManager.Controllers
             return RedirectToAction("Login");
         }
         #endregion
+
         #region Account Verification
         public void SendEmailVerification(User user, string newEmail)
         {
