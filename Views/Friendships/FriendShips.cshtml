@@ -10,7 +10,6 @@
     ChatManager.Models.Friendships friendship = currentUser.StatusWith(user);
     string amitié = friendship != null && friendship.Accepted ? "Ami" : "Pas ami";
 
-
     <div>
         <span>@user.GetFullName() </span><span>@amitié</span>
 
