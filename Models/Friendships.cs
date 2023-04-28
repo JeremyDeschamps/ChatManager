@@ -8,7 +8,6 @@ namespace ChatManager.Models
 {
     public class Friendships
     {
-
         public Friendships() {
             Pending = true;
             Accepted = false;
@@ -20,7 +19,7 @@ namespace ChatManager.Models
         public int UserSending { get; set; }
         public bool Pending { get; set; } 
         public bool Accepted { get; set; }
-        public bool Denied { get; set; }
+        public bool Denied { get; set; } 
 
         [JsonIgnore]
         public User User1 { get => DB.Users.FindUser(IdUser1); }

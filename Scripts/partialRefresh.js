@@ -1,6 +1,7 @@
 ﻿let EndSessionAction = '/Session/End';
 
 class PartialRefresh {
+
     constructor(serviceURL, container, refreshRate, postRefreshCallback = null) {
         this.serviceURL = serviceURL;
         this.container = container;
@@ -10,9 +11,11 @@ class PartialRefresh {
         this.refresh(true);
         setInterval(() => { this.refresh() }, this.refreshRate);
     }
+
     static setEndSessionAction(action) {
         EndSessionAction = action;
     }
+
     pause() { this.paused = true }
 
     restart() { this.paused = false }

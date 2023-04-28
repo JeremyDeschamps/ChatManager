@@ -21,14 +21,28 @@ namespace ChatManager.Controllers
                 RedirectToAction("Index");
             }
             return View();
-        }
-        public ActionResult GetFriendShipsStatus()
+        } 
+        public void Search()
         {
-            return View();
+
         }
-       /* public ActionResult Filter(bool check)
+        public void SetFilterNotFriend(bool check = false)
         {
-            return View(check);
-        }*/
+        }
+        public void SetFilterRequest(bool check = false)
+        {
+        }
+        public void SetFilterPending(bool check = false)
+        {
+        }
+        public void SetFilterFriend(bool check = false)
+        {
+        }
+        public void SetFilterRefused(bool check = false)
+        {
+        }
+        public void SetFilterBlocked(bool check = false)
+        {
+        }
     }
 }

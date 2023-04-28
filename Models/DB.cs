@@ -39,7 +39,7 @@ namespace ChatManager.Models
             ResetPasswordCommands = new Repository<ResetPasswordCommand>();
             Logins = new Repository<Login>();
             Users = new UsersRepository();
-            Friendships = new Repository<Friendships>();
+            Friendships = new FriendshipsRepository();
             InitRepositories(this);
         }
         private static void InitRepositories(DB db)
