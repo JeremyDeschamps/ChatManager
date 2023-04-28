@@ -8,6 +8,7 @@ namespace ChatManager.Models
 {
     public class Friendships
     {
+
         public Friendships() {
             Pending = true;
             Accepted = false;

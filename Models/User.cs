@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace ChatManager.Models
@@ -105,5 +106,9 @@ namespace ChatManager.Models
             return FirstName + " " + LastName;
         }
         #endregion
+
+
+        [JsonIgnore]
+        public List<Friendships> Friendships { get => DB.Friendships.ToList().Where(f => f.IdUser1 == Id || f.IdUser2 == Id).ToList(); }
     }
 }
