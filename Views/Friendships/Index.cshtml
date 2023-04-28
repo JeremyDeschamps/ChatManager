@@ -1,4 +1,4 @@
-﻿
+﻿@model ChatManager.Models.User
 @{
     ViewBag.Title = "Gestion des amitiés";
     ViewBag.Icon = "/friendships.png";
@@ -33,11 +33,14 @@
     <input type="checkbox" id="filter_Blocked" class="filter" checked>
     <label for="filter_Blocked" class="fa red fa-ban" title="Afficher/masquer tous les usagers bloqués"></label>
 </div>
+<div id="friendshipsListContainer">
+</div>
 <hr />
 @section Scripts {
     <script defer>
+        
         console.log("a");
-        let friendShipsStatus = new PartialRefresh("/Friendships/GetFriendShipsStatus", "friendshipsListContainer", 5, UpdatefriendShipsCallback);
+        let friendShipsStatus = new PartialRefresh("@Url.Action("GetFriendShipsStatus", "Friendships")", "friendshipsListContainer", 5, UpdatefriendShipsCallback);
         $('#Search').keypress(function (event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if (keycode == '13') {
@@ -71,8 +74,8 @@
 
         function UpdatefriendShipsCallback() {
             $(".command").click(function () {
-                var url = $(this).attr("url");
-                var message = $(this).attr("message");
+                var url = $(this).attr("data-url");
+                var message = $(this).attr("data-message");
                 friendShipsStatus.confirmedCommand(message, url);
             });
 

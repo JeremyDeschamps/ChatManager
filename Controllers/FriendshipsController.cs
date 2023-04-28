@@ -21,7 +21,17 @@ namespace ChatManager.Controllers
                 RedirectToAction("Index");
             }
             return View();
-        } 
+        }
+        public PartialViewResult GetFriendShipsStatus(bool forceRefresh = false)
+        {
+
+            if (forceRefresh || DB.Friendships.HasChanged)
+            {
+                ViewBag.CurrentUser = OnlineUsers.GetSessionUser();
+                return PartialView("FriendShips", DB.Users.ToList().OrderBy(user => user.FirstName));
+            }
+            return null;
+        }
         public void Search()
         {
 

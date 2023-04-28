@@ -10,6 +10,11 @@ namespace ChatManager.Models
 {
     public class User
     {
+
+        public Friendships StatusWith(User user)
+        {
+            return Friendships.Find(fs => fs.User1 == user || fs.User2 == user);
+        }
         public User()
         {
             Blocked = false;

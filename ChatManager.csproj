@@ -131,6 +131,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Friendships.cs" />
+    <Compile Include="Models\FriendshipsRepository.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Countries.cs" />
     <Compile Include="Models\DB.cs" />
@@ -209,6 +210,7 @@
     <Content Include="App_Data\UnverifiedEmails.json" />
     <Content Include="App_Data\Users.json" />
     <Content Include="App_Data\UserTypes.json" />
+    <Content Include="App_Data\Friendships.json" />
     <None Include="Properties\PublishProfiles\ChatManager2023 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\MDB2023 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\MDB2023 - Web Deploy1.pubxml" />
