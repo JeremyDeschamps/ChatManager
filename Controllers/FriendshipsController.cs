@@ -22,9 +22,15 @@ namespace ChatManager.Controllers
             }
             return View();
         }
-        public ActionResult GetFriendShipsStatus()
+        public PartialViewResult GetFriendShipsStatus(bool forceRefresh = false)
         {
-            return View();
+
+            if (forceRefresh || DB.Friendships.HasChanged)
+            {
+                ViewBag.CurrentUser = OnlineUsers.GetSessionUser();
+                return PartialView("FriendShips", DB.Users.ToList().OrderBy(user => user.FirstName));
+            }
+            return null;
         }
        /* public ActionResult Filter(bool check)
         {
