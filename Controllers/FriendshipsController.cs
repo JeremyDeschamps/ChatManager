@@ -17,11 +17,7 @@ namespace ChatManager.Controllers
         public ActionResult SendFriendRequest(int id) 
         {
             User CurrentUser = OnlineUsers.GetSessionUser();
-            Friendships friendships = new Friendships();
-            friendships.UserSending = CurrentUser.Id;
-            friendships.IdUser1 = CurrentUser.Id;
-            friendships.IdUser2 = id;
-            DB.Friendships.Add(friendships);
+            DB.Friendships.Add(new Friendships() { UserSending = CurrentUser.Id, IdUser1 = CurrentUser.Id, IdUser2 = id});
             return RedirectToAction("Index");
         }
         public PartialViewResult GetFriendShipsStatus(bool forceRefresh = false)
