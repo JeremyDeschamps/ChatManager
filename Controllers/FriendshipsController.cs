@@ -9,6 +9,7 @@ namespace ChatManager.Controllers
 {
     public class FriendshipsController : Controller
     {
+        [OnlineUsers.UserAccess]
         public ActionResult Index()
         {
             return View();
