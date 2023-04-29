@@ -265,6 +265,7 @@
     <Content Include="Views\Accounts\VerifyDone.cshtml" />
     <Content Include="Views\Accounts\VerifyError.cshtml" />
     <Content Include="Views\Friendships\Index.cshtml" />
+    <Content Include="Views\Friendships\FriendShips.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
