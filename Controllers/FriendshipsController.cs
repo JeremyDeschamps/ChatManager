@@ -9,6 +9,7 @@ namespace ChatManager.Controllers
 {
     public class FriendshipsController : Controller
     {
+        [OnlineUsers.UserAccess]
         public ActionResult Index()
         {
             return View();
@@ -23,6 +24,7 @@ namespace ChatManager.Controllers
             DB.Friendships.Add(friendships);
             return RedirectToAction("Index");
         }
+        [OnlineUsers.UserAccess]
         public PartialViewResult GetFriendShipsStatus(bool forceRefresh = false)
         {
             if (forceRefresh || DB.Friendships.HasChanged)
