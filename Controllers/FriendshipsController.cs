@@ -20,6 +20,31 @@ namespace ChatManager.Controllers
             DB.Friendships.Add(new Friendships() { UserSending = CurrentUser.Id, IdUser1 = CurrentUser.Id, IdUser2 = id});
             return RedirectToAction("Index");
         }
+        public ActionResult AcceptFriendRequest(int id)
+        {
+            User CurrentUser = OnlineUsers.GetSessionUser();
+            Friendships friendship = CurrentUser.StatusWith(CurrentUser.Friends.Find(u => u.Id == id));
+            friendship.Accepted = true;
+            friendship.Pending = false;
+            DB.Friendships.Update(friendship);
+            return RedirectToAction("Index");
+        }
+        public ActionResult DenieFriendRequest(int id)
+        {
+            User CurrentUser = OnlineUsers.GetSessionUser();
+            Friendships friendship = CurrentUser.StatusWith(CurrentUser.Friends.Find(u => u.Id == id));
+            friendship.Denied = true;
+            friendship.Pending = false;
+            DB.Friendships.Update(friendship);
+            return RedirectToAction("Index");
+        }
+        public ActionResult RemoveFriend(int id)
+        {
+            User CurrentUser = OnlineUsers.GetSessionUser();
+            Friendships friendship = CurrentUser.StatusWith(CurrentUser.Friends.Find(u => u.Id == id));
+            DB.Friendships.Delete(friendship.Id);
+            return RedirectToAction("Index");
+        }
         [OnlineUsers.UserAccess]
         public PartialViewResult GetFriendShipsStatus(bool forceRefresh = false)
         {
