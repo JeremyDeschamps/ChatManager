@@ -376,3 +376,32 @@
         }
     }
 }
+@helper CommandIcon(string iconClass, string actionURL, string message)
+{ 
+    <span class="command icon fa @iconClass" data-url="@actionURL" data-message="@message" title="@message"></span>   
+}
+
+@helper SendFrienshipRequestIcon(int idUser, string name)
+{
+   @Helper.CommandIcon("green fa-plus-circle", "Friendships/SendFriendshipRequest/" + idUser, "Envoyer une demande d'amitié à " + name)
+}
+
+@helper AlreadyFriendIcon(string name)
+{
+    <span class="icon fa green fa-check-circle" title="Vous êtes amis avec @name"></span>
+}
+@helper RemoveFriendIcon(int idUser, string name)
+{
+    @Helper.CommandIcon("red fa-times", "/Friendships/RemoveFriendship/" + idUser, "Retirer l'amitié avec " + name)
+}
+
+@helper UserIcons(ChatManager.Models.User user, ChatManager.Models.User currentUser)
+{
+    @Helper.OnLineStatusIcon(ChatManager.Models.OnlineUsers.IsOnLine(user.Id));
+    var friendship = currentUser.StatusWith(user);
+    if (friendship == null) { 
+        @Helper.SendFrienshipRequestIcon(user.Id, user.GetFullName());
+    } else {
+        AlreadyFriendIcon(user.GetFullName());
+    }
+}
