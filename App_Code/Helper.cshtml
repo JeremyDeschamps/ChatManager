@@ -380,6 +380,10 @@
 {
     <span class="command icon fa @iconClass" data-url="@actionURL" data-message="@message" title="@message"></span>
 }
+@helper TooltipIcon(string iconClass, string message)
+{
+    <span class="icon fa @iconClass" title="@message"></span>
+}
 
 @helper SendFrienshipRequestIcon(int idUser, string name)
 {
@@ -388,23 +392,86 @@
 
 @helper AlreadyFriendIcon(string name)
 {
-    <span class="icon fa green fa-check-circle" title="Vous êtes amis avec @name"></span>
+    @Helper.TooltipIcon("green fa-check-circle", "Vous êtes amis avec " + @name)
 }
+
 @helper RemoveFriendIcon(int idUser, string name)
 {
     @Helper.CommandIcon("red fa-times", "/Friendships/RemoveFriend/" + idUser, "Retirer l'amitié avec " + name)
 }
 
+@helper BlockedIcon()
+{
+    @Helper.TooltipIcon("red fa-ban", "Cet utilisateur est bloqué")
+}
+@helper pendingIcon()
+{
+    @Helper.TooltipIcon("green fa-clock-o", "En attente de la réponse")
+}
+@helper  AcceptIcon(int id)
+{
+    @Helper.CommandIcon("green fa-check", "/Friendships/AcceptFriendRequest/" + id, "Accepter la demande d'amitié")
+}
+@helper  DeclineIcon(int id)
+{
+    @Helper.CommandIcon("red fa-times", "/Friendships/DenyFriendRequest/" + id, "Refuser la demande d'amitié")
+}
+
+@helper  CancelFriendRequest(int id)
+{
+    @Helper.CommandIcon("red fa-times", "Friendships/RemoveFriend/" + id, "Annuler la demande d'amitié")
+}
+@helper  DeclinedIcon()
+{
+    @Helper.TooltipIcon("red fa-times-circle", "Demande d'amitié refusée")
+}
+
 @helper UserIcons(ChatManager.Models.User user, ChatManager.Models.User currentUser)
 {
     @Helper.OnLineStatusIcon(ChatManager.Models.OnlineUsers.IsOnLine(user.Id));
+    if (user.Blocked)
+    {
+        @Helper.BlockedIcon();
+        return;
+    }
     var friendship = currentUser.StatusWith(user);
     if (friendship == null)
     {
         @Helper.SendFrienshipRequestIcon(user.Id, user.GetFullName());
     }
-    else
+    else if (friendship.Accepted)
     {
         @Helper.AlreadyFriendIcon(user.GetFullName());
+        @Helper.RemoveFriendIcon(user.Id, user.GetFullName());
+    }
+    else if (friendship.Pending)
+    {
+        if (friendship.IsSender(currentUser))
+        {
+            @Helper.pendingIcon();
+            @Helper.CancelFriendRequest(user.Id);
+        }
+        else
+        {
+            @Helper.AcceptIcon(user.Id);
+            @Helper.DeclineIcon(user.Id);
+        }
+   
+    }
+    else if (friendship.Denied)
+    {
+        if (friendship.IsSender(currentUser))
+        {
+            @Helper.DeclinedIcon();
+        }
+        else
+        {
+            @Helper.DeclinedIcon();
+            @Helper.SendFrienshipRequestIcon(user.Id, user.GetFullName());
+        }
+    }
+    else
+    {
+        throw new Exception("Le cas n'est pas compris dans les états possibles de la classe Friendships");
     }
 }

@@ -8,8 +8,8 @@
 {
     if (user == currentUser) { continue; }
 
-    <div>
-        <a href="mailto:@user.Email">@user.GetFullName()</a>
+    <div class="friendContainer">
+        @Helper.AvatarUser(user, "UserSmallAvatar")
         @Helper.UserIcons(user, currentUser)
     </div>
 }

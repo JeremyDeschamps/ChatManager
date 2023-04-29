@@ -27,5 +27,6 @@ namespace ChatManager.Models
         [JsonIgnore]
         public User User2 { get => DB.Users.FindUser(IdUser2); }
 
+        public bool IsSender(User user) => user.Id == UserSending;
     }
 }
