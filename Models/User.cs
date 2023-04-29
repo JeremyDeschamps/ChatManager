@@ -10,7 +10,6 @@ namespace ChatManager.Models
 {
     public class User
     {
-
         public Friendships StatusWith(User user)
         {
             return Friendships.Find(fs => fs.User1 == user || fs.User2 == user);
@@ -115,5 +114,25 @@ namespace ChatManager.Models
 
         [JsonIgnore]
         public List<Friendships> Friendships { get => DB.Friendships.ToList().Where(f => f.IdUser1 == Id || f.IdUser2 == Id).ToList(); }
+        [JsonIgnore]
+        public List<User> Friends
+        {
+            get
+            {
+                List<User> friends = new List<User>();
+                foreach (var friendships in Friendships)
+                {
+                    if(friendships.User1 == this)
+                    {
+                       friends.Add(friendships.User2);
+                    }
+                    else
+                    {
+                        friends.Add(friendships.User1);
+                    }
+                }
+                return friends.OrderBy(f => f.FirstName).ToList();
+            }
+        }
     }
 }

@@ -9,22 +9,22 @@ namespace ChatManager.Controllers
 {
     public class FriendshipsController : Controller
     {
-
         public ActionResult Index()
         {
             return View();
         }
-        public ActionResult SendFriendRequest() 
+        public ActionResult SendFriendRequest(int id) 
         {
-            if(ModelState.IsValid)
-            {
-                RedirectToAction("Index");
-            }
-            return View();
+            User CurrentUser = OnlineUsers.GetSessionUser();
+            Friendships friendships = new Friendships();
+            friendships.UserSending = CurrentUser.Id;
+            friendships.IdUser1 = CurrentUser.Id;
+            friendships.IdUser2 = id;
+            DB.Friendships.Add(friendships);
+            return RedirectToAction("Index");
         }
         public PartialViewResult GetFriendShipsStatus(bool forceRefresh = false)
         {
-
             if (forceRefresh || DB.Friendships.HasChanged)
             {
                 ViewBag.CurrentUser = OnlineUsers.GetSessionUser();
