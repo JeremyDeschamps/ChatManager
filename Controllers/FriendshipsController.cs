@@ -17,7 +17,15 @@ namespace ChatManager.Controllers
         public ActionResult SendFriendRequest(int id) 
         {
             User CurrentUser = OnlineUsers.GetSessionUser();
-            DB.Friendships.Add(new Friendships() { UserSending = CurrentUser.Id, IdUser1 = CurrentUser.Id, IdUser2 = id});
+
+            if(CurrentUser.StatusWith(CurrentUser.Friends.Find(u => u.Id == id)) != null)
+            {
+                Friendships friendship = CurrentUser.StatusWith(CurrentUser.Friends.Find(u => u.Id == id));
+                DB.Friendships.Delete(friendship.Id);
+            }
+            
+            DB.Friendships.Add(new Friendships() { UserSending = CurrentUser.Id, IdUser1 = CurrentUser.Id, IdUser2 = id });
+           
             return RedirectToAction("Index");
         }
         public ActionResult AcceptFriendRequest(int id)
@@ -59,23 +67,33 @@ namespace ChatManager.Controllers
         {
 
         }
-        public void SetFilterNotFriend(bool check = false)
+        public PartialViewResult SetFilterNotFriend(bool check = false)
         {
+           
+            return null;
         }
-        public void SetFilterRequest(bool check = false)
+        public PartialViewResult SetFilterRequest(bool check = false)
         {
+            
+            return null;
         }
-        public void SetFilterPending(bool check = false)
+        public PartialViewResult SetFilterPending(bool check = false)
         {
+           
+            return null;
         }
-        public void SetFilterFriend(bool check = false)
+        public PartialViewResult SetFilterFriend(bool check = false)
         {
+            return null;
         }
-        public void SetFilterRefused(bool check = false)
+        public PartialViewResult SetFilterRefused(bool check = false)
         {
+            
+            return null;
         }
-        public void SetFilterBlocked(bool check = false)
+        public PartialViewResult SetFilterBlocked(bool check = false)
         {
+            return null;
         }
     }
 }
