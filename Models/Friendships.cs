@@ -21,6 +21,7 @@ namespace ChatManager.Models
         public bool Accepted { get; set; }
         public bool Denied { get; set; } 
 
+
         [JsonIgnore]
         public User User1 { get => DB.Users.FindUser(IdUser1); }
         

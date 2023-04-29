@@ -29,7 +29,7 @@ namespace ChatManager.Controllers
             DB.Friendships.Update(friendship);
             return RedirectToAction("Index");
         }
-        public ActionResult DenieFriendRequest(int id)
+        public ActionResult DenyFriendRequest(int id)
         {
             User CurrentUser = OnlineUsers.GetSessionUser();
             Friendships friendship = CurrentUser.StatusWith(CurrentUser.Friends.Find(u => u.Id == id));
