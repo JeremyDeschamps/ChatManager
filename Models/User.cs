@@ -111,7 +111,6 @@ namespace ChatManager.Models
         }
         #endregion
 
-
         [JsonIgnore]
         public List<Friendships> Friendships { get => DB.Friendships.ToList().Where(f => f.IdUser1 == Id || f.IdUser2 == Id).ToList(); }
         [JsonIgnore]
