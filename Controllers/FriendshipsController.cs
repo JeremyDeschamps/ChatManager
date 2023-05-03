@@ -67,33 +67,35 @@ namespace ChatManager.Controllers
         {
 
         }
-        public PartialViewResult SetFilterNotFriend(bool check = false)
+        public ActionResult SetFilterNotFriend(bool check = false)
         {
-           
-            return null;
+            Session.Add("FilterNotFriend", check);
+            return RedirectToAction("Index");
         }
-        public PartialViewResult SetFilterRequest(bool check = false)
+        public ActionResult SetFilterRequest(bool check = false)
         {
-            
-            return null;
+            Session.Add("FilterRequest", check);
+            return RedirectToAction("Index");
         }
-        public PartialViewResult SetFilterPending(bool check = false)
+        public ActionResult SetFilterPending(bool check = false)
         {
-           
-            return null;
+            Session.Add("FilterPending", check);
+            return RedirectToAction("Index");
         }
-        public PartialViewResult SetFilterFriend(bool check = false)
+        public ActionResult SetFilterFriend(bool check = false)
         {
-            return null;
+            Session.Add("FilterFriend", check);
+            return RedirectToAction("Index");
         }
-        public PartialViewResult SetFilterRefused(bool check = false)
+        public ActionResult SetFilterRefused(bool check = false)
         {
-            
-            return null;
+            Session.Add("FilterRefused", check);
+            return RedirectToAction("Index");
         }
-        public PartialViewResult SetFilterBlocked(bool check = false)
+        public ActionResult SetFilterBlocked(bool check = false)
         {
-            return null;
+            Session.Add("FilterBlocked", check);
+            return RedirectToAction("Index");
         }
     }
 }
