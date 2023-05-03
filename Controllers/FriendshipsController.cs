@@ -1,6 +1,7 @@
 ﻿using ChatManager.Models;
 using System;
 using System.Collections.Generic;
+using System.EnterpriseServices.CompensatingResourceManager;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -140,13 +141,59 @@ namespace ChatManager.Controllers
             if (forceRefresh || DB.Friendships.HasChanged)
             {
                 ViewBag.CurrentUser = OnlineUsers.GetSessionUser();
-                return PartialView("FriendShips", DB.Users.ToList().OrderBy(user => user.FirstName));
+                return PartialView("FriendShips", ApplyFilters(DB.Users.ToList()).OrderBy(user => user.FirstName));
             }
             return null;
         }
         public void Search()
         {
 
+        }
+        Func<User, User, bool> FilterNotFriend = (user, currentUser) =>
+        {
+            Friendships status = currentUser.StatusWith(user);
+            return status == null || (status.Denied && status.IsSender(user));
+        };
+
+        Func<User, User, bool> FilterRequest = (user, currentUser) =>
+        {
+            Friendships status = currentUser.StatusWith(user);
+            return status != null && status.Pending && status.IsSender(user);
+        };
+
+        Func<User, User, bool> FilterPending = (user, currentUser) =>
+        {
+            Friendships status = currentUser.StatusWith(user);
+            return status != null && status.Pending && status.IsSender(currentUser);
+        };
+        Func<User, User, bool> FilterFriend = (user, currentUser) =>
+        {
+            Friendships status = currentUser.StatusWith(user);
+            return status != null && status.Accepted;
+        };
+        Func<User, User, bool> FilterRefused = (user, currentUser) =>
+        {
+            Friendships status = currentUser.StatusWith(user);
+            return status != null && status.Denied;
+        };
+
+
+        private List<User> ApplyFilters(IEnumerable<User> users)
+        {
+            User currentUser = OnlineUsers.GetSessionUser();
+            if (!(bool)Session["FilterNotFriend"])
+                users = users.Where(user => !FilterNotFriend(user, currentUser));
+            if (!(bool)Session["FilterRequest"])
+                users = users.Where(user => !FilterRequest(user, currentUser));
+            if (!(bool)Session["FilterPending"])
+                users = users.Where(user => !FilterPending(user, currentUser));
+            if (!(bool)Session["FilterFriend"])
+                users = users.Where(user => !FilterFriend(user, currentUser));
+            if (!(bool)Session["FilterRefused"])
+                users = users.Where(user => !FilterRefused(user, currentUser));
+            if (!(bool)Session["FilterBlocked"])
+                users = users.Where(user => !user.Blocked);
+            return users.ToList();
         }
         public ActionResult SetFilterNotFriend(bool check = false)
         {
