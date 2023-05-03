@@ -9,7 +9,6 @@
     ChatManager.Models.Friendships friendships = user.StatusWith(currentUser);
     if (user == currentUser) { continue; }
 
-
     <div class="friendContainer">
         @Helper.AvatarUser(user, "UserSmallAvatar")
         @Helper.UserIcons(user, currentUser)

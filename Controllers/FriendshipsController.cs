@@ -149,29 +149,29 @@ namespace ChatManager.Controllers
         {
 
         }
-        Func<User, User, bool> FilterNotFriend = (user, currentUser) =>
+        Func<User, User, bool> FilterNotFriendF = (user, currentUser) =>
         {
             Friendships status = currentUser.StatusWith(user);
             return status == null || (status.Denied && status.IsSender(user));
         };
 
-        Func<User, User, bool> FilterRequest = (user, currentUser) =>
+        Func<User, User, bool> FilterRequestF = (user, currentUser) =>
         {
             Friendships status = currentUser.StatusWith(user);
             return status != null && status.Pending && status.IsSender(user);
         };
 
-        Func<User, User, bool> FilterPending = (user, currentUser) =>
+        Func<User, User, bool> FilterPendingF = (user, currentUser) =>
         {
             Friendships status = currentUser.StatusWith(user);
             return status != null && status.Pending && status.IsSender(currentUser);
         };
-        Func<User, User, bool> FilterFriend = (user, currentUser) =>
+        Func<User, User, bool> FilterFriendF = (user, currentUser) =>
         {
             Friendships status = currentUser.StatusWith(user);
             return status != null && status.Accepted;
         };
-        Func<User, User, bool> FilterRefused = (user, currentUser) =>
+        Func<User, User, bool> FilterRefusedF = (user, currentUser) =>
         {
             Friendships status = currentUser.StatusWith(user);
             return status != null && status.Denied;
@@ -181,48 +181,48 @@ namespace ChatManager.Controllers
         private List<User> ApplyFilters(IEnumerable<User> users)
         {
             User currentUser = OnlineUsers.GetSessionUser();
-            if (!(bool)Session["FilterNotFriend"])
-                users = users.Where(user => !FilterNotFriend(user, currentUser));
-            if (!(bool)Session["FilterRequest"])
-                users = users.Where(user => !FilterRequest(user, currentUser));
-            if (!(bool)Session["FilterPending"])
-                users = users.Where(user => !FilterPending(user, currentUser));
-            if (!(bool)Session["FilterFriend"])
-                users = users.Where(user => !FilterFriend(user, currentUser));
-            if (!(bool)Session["FilterRefused"])
-                users = users.Where(user => !FilterRefused(user, currentUser));
-            if (!(bool)Session["FilterBlocked"])
+            if (!FilterNotFriend)
+                users = users.Where(user => !FilterNotFriendF(user, currentUser));
+            if (!FilterRequest)
+                users = users.Where(user => !FilterRequestF(user, currentUser));
+            if (!FilterPending)
+                users = users.Where(user => !FilterPendingF(user, currentUser));
+            if (!FilterFriend)
+                users = users.Where(user => !FilterFriendF(user, currentUser));
+            if (!FilterRefused)
+                users = users.Where(user => !FilterRefusedF(user, currentUser));
+            if (!FilterBlocked)
                 users = users.Where(user => !user.Blocked);
             return users.ToList();
         }
         public ActionResult SetFilterNotFriend(bool check = false)
         {
-            Session["FilterNotFriend"] = check;
+            FilterNotFriend = check;
             return null;
         }
         public ActionResult SetFilterRequest(bool check = false)
         {
-            Session["FilterRequest"] = check;
+            FilterRequest = check;
             return null;
         }
         public ActionResult SetFilterPending(bool check = false)
         {
-            Session["FilterPending"] = check;
+            FilterPending = check;
             return null;
         }
         public ActionResult SetFilterFriend(bool check = false)
         {
-            Session["FilterFriend"] = check;
+            FilterFriend = check;
             return null;
         }
         public ActionResult SetFilterRefused(bool check = false)
         {
-            Session["FilterRefused"] = check;
+            FilterRefused = check;
             return null;
         }
         public ActionResult SetFilterBlocked(bool check = false)
         {
-            Session["FilterBlocked"] = check;
+            FilterBlocked = check;
             return null;
         }
     }
