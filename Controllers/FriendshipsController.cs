@@ -207,6 +207,8 @@ namespace ChatManager.Controllers
                 users = users.Where(user => !FilterRefusedF(user, currentUser));
             if (!FilterBlocked)
                 users = users.Where(user => !user.Blocked);
+            if (FilterSearch != "")
+                users = users.Where(user => user.GetFullName().Contains(FilterSearch));
             return users.ToList();
         }
         public ActionResult SetFilterNotFriend(bool check = false)
