@@ -9,16 +9,6 @@
     ChatManager.Models.Friendships friendships = user.StatusWith(currentUser);
     if (user == currentUser) { continue; }
 
-    if ((bool)Session["FilterNotFriend"] && !friendships.Accepted && !friendships.IsSender(currentUser)) { continue; }
-
-    if ((bool)Session["FilterRequest"] && friendships.Accepted) { continue; }
-
-    if ((bool)Session["FilterPending"] && friendships.Accepted) { continue; }
-
-    if ((bool)Session["FilterFriend"] && friendships.Accepted) { continue; }
-
-    if ((bool)Session["FilterRefused"] && friendships.Accepted) { continue; }
-
     <div class="friendContainer">
         @Helper.AvatarUser(user, "UserSmallAvatar")
         @Helper.UserIcons(user, currentUser)

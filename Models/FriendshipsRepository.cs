@@ -5,8 +5,9 @@ using System.Web;
 
 namespace ChatManager.Models
 {
+    
     public class FriendshipsRepository : Repository<Friendships>
     {
-        
+       
     }
 }
