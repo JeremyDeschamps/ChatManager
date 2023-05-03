@@ -10,6 +10,87 @@ namespace ChatManager.Controllers
 {
     public class FriendshipsController : Controller
     {
+        private bool FilterNotFriend
+        {
+            get
+            {
+                if (Session["FilterNotFriend"] == null)
+                    Session["FilterNotFriend"] = true;
+                return (bool)Session["FilterNotFriend"];
+            }
+            set
+            {
+                Session["FilterNotFriend"] = value;
+            }
+        }
+        private bool FilterRequest
+        {
+            get
+            {
+                if (Session["FilterRequest"] == null)
+                    Session["FilterRequest"] = true;
+                return (bool)Session["FilterRequest"];
+            }
+            set
+            {
+                Session["FilterRequest"] = value;
+            }
+        }
+        private bool FilterPending
+        {
+            get
+            {
+                if (Session["FilterPending"] == null)
+                    Session["FilterPending"] = true;
+                return (bool)Session["FilterPending"];
+            }
+            set
+            {
+                Session["FilterPending"] = value;
+            }
+        }
+        private bool FilterFriend
+        {
+            get
+            {
+                if (Session["FilterFriend"] == null)
+                    Session["FilterFriend"] = true;
+                return (bool)Session["FilterFriend"];
+            }
+            set
+            {
+                Session["FilterFriend"] = value;
+            }
+        }
+        private bool FilterRefused
+        {
+            get
+            {
+                if (Session["FilterRefused"] == null)
+                    Session["FilterRefused"] = true;
+                return (bool)Session["FilterRefused"];
+            }
+            set
+            {
+                Session["FilterRefused"] = value;
+            }
+        }
+        private bool FilterBlocked
+        {
+            get
+            {
+                if (Session["FilterBlocked"] == null)
+                    Session["FilterBlocked"] = true;
+                return (bool)Session["FilterBlocked"];
+            }
+            set
+            {
+                Session["FilterBlocked"] = value;
+            }
+        }
+
+
+
         [OnlineUsers.UserAccess]
         public ActionResult Index()
         {
@@ -146,3 +227,5 @@ namespace ChatManager.Controllers
         }
     }
 }
+
+ApplyFilter(Userenumerable).tolist
