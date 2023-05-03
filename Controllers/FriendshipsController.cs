@@ -88,6 +88,19 @@ namespace ChatManager.Controllers
                 Session["FilterBlocked"] = value;
             }
         }
+        private string FilterSearch
+        {
+            get
+            {
+                if (Session["FilterSearch"] == null)
+                    Session["FilterSearch"] = "";
+                return (string)Session["FilterSearch"];
+            }
+            set
+            {
+                Session["FilterSearch"] = value;
+            }
+        }
 
 
 
@@ -145,9 +158,10 @@ namespace ChatManager.Controllers
             }
             return null;
         }
-        public void Search()
+        public ActionResult Search(string text = "")
         {
-
+            FilterSearch = text;
+            return null;
         }
         Func<User, User, bool> FilterNotFriendF = (user, currentUser) =>
         {
