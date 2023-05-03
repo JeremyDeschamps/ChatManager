@@ -69,32 +69,32 @@ namespace ChatManager.Controllers
         }
         public ActionResult SetFilterNotFriend(bool check = false)
         {
-            Session.Add("FilterNotFriend", check);
+            Session["FilterNotFriend"] = check;
             return RedirectToAction("Index");
         }
         public ActionResult SetFilterRequest(bool check = false)
         {
-            Session.Add("FilterRequest", check);
+            Session["FilterRequest"] = check;
             return RedirectToAction("Index");
         }
         public ActionResult SetFilterPending(bool check = false)
         {
-            Session.Add("FilterPending", check);
+            Session["FilterPending"] = check;
             return RedirectToAction("Index");
         }
         public ActionResult SetFilterFriend(bool check = false)
         {
-            Session.Add("FilterFriend", check);
+            Session["FilterFriend"] = check;
             return RedirectToAction("Index");
         }
         public ActionResult SetFilterRefused(bool check = false)
         {
-            Session.Add("FilterRefused", check);
+            Session["FilterRefused"] = check;
             return RedirectToAction("Index");
         }
         public ActionResult SetFilterBlocked(bool check = false)
         {
-            Session.Add("FilterBlocked", check);
+            Session["FilterBlocked"] = check;
             return RedirectToAction("Index");
         }
     }
