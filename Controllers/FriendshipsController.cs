@@ -180,5 +180,3 @@ namespace ChatManager.Controllers
         }
     }
 }
-
-ApplyFilter(Userenumerable).tolist
