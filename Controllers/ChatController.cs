@@ -9,7 +9,7 @@ namespace ChatManager.Controllers
 {
     public class ChatController : Controller
     {
-        int SelectedFriendId 
+        int SelectedFriendId
         {
             get
             {
@@ -24,13 +24,22 @@ namespace ChatManager.Controllers
         public ActionResult Index()
         {
             ViewBag.User = OnlineUsers.GetSessionUser();
-            ViewBag.SelectedUserId = Session["selectedUserId"];
+            ViewBag.SelectedFriendId = SelectedFriendId;
             return View();
         }
         public ActionResult FriendList()
         {
-
+            return null;
         }
-        public ActionResult ChatWindow() { }
+        public ActionResult ChatWindow()
+        {
+            return null;
+        }
+
+        public ActionResult SetCurrentTarget(int id)
+        {
+            SelectedFriendId = id;
+            return null;
+        }
     }
 }

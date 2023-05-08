@@ -1,7 +1,16 @@
-﻿
+﻿@model ChatManager.Models.User
 @{
-    ViewBag.Title = "FriendList";
+    ChatManager.Models.User user = (ChatManager.Models.User)ViewBag.User;
+    int selectedFriendId = (int)ViewBag.SelectedFriendId;
 }
 
-<h2>FriendList</h2>
+@foreach (ChatManager.Models.User friend in user.Friends)
+{
+    string isSelected = selectedFriendId == friend.Id ? "selectedTarget" : "unselectedTarget";
 
+    <div class="@isSelected">
+        <div>
+            <div class="UserSmallAvatar" style="background: url(@friend.GetAvatarURL())" title="@friend.GetFullName()"></div>
+        </div>
+    </div>
+}
