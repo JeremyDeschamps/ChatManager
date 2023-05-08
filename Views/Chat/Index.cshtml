@@ -24,14 +24,25 @@
     </div>
 </div>
 @section Scripts {
-    <script>
-        let friendsPanelUpdater = new PartialRefresh("/Chat/GetFriendsList", "friendsListContainer", 5, UpdateFriendsCallback);
-        let messagesPanelUpdater = new PartialRefresh("/Chat/GetMessages", "messagesPanel", 5, UpdateMessagesCallback);
+    <script defer>
+        function ajaxActionCall(actionLink, callback = null) {
+            // Ajax Action Call to actionLink
+            $.ajax({
+                url: actionLink,
+                method: 'GET',
+                success: () => {
+                    if (callback != null) callback();
+                }
+            });
+        }
+
+        let friendsPanelUpdater = new PartialRefresh("/Chat/FriendList", "friendsListContainer", 5, UpdateFriendsCallback);
+        let messagesPanelUpdater = new PartialRefresh("/Chat/ChatWindow", "messagesPanel", 5, UpdateMessagesCallback);
 
         function UpdateFriendsCallback() {
             messagesPanelUpdater.refresh(true);
             $(".unselectedTarget").click(function () {
-                var userId = $(this).attr("userid");
+                var userId = $(this).attr("data-userid");
                 ajaxActionCall("/Chat/SetCurrentTarget/" + userId, () => { friendsPanelUpdater.refresh(true); messagesPanelUpdater.refresh(true); });
             })
         }

@@ -17,6 +17,13 @@
         <div class="ellipsis">@user.GetFullName()</div>
     </div>
 }
+
+@helper AvatarTooltip(ChatManager.Models.User user, string avatarClass = "UserMediumAvatar")
+{
+    var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+    var avatarUrl = Url.Content(user.GetAvatarURL());
+    <div class="@avatarClass" style="background: url(@avatarUrl)" title="@user.GetFullName()"></div>
+}
 @helper UsersCheckList(IEnumerable<ChatManager.Models.User> users, List<int> selectedUsers, string usersCheckListName = "UsersCheckList")
 {
     var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
@@ -456,7 +463,7 @@
             @Helper.AcceptIcon(user.Id);
             @Helper.DeclineIcon(user.Id);
         }
-   
+
     }
     else if (friendship.Denied)
     {

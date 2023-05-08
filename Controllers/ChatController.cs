@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Web;
 using System.Web.Mvc;
 using ChatManager.Models;
@@ -23,22 +24,52 @@ namespace ChatManager.Controllers
         [OnlineUsers.UserAccess]
         public ActionResult Index()
         {
-            ViewBag.User = OnlineUsers.GetSessionUser();
-            ViewBag.SelectedFriendId = SelectedFriendId;
             return View();
         }
-        public ActionResult FriendList()
+        public PartialViewResult FriendList()
         {
-            return null;
+            User user = OnlineUsers.GetSessionUser();
+            ViewBag.User = user;
+            ViewBag.SelectedFriendId = SelectedFriendId;
+            return PartialView("FriendList", user.Friends.FindAll(u => u.StatusWith(user).Accepted));
         }
-        public ActionResult ChatWindow()
+        public PartialViewResult ChatWindow()
         {
-            return null;
+            return PartialView("ChatWindow");
         }
 
         public ActionResult SetCurrentTarget(int id)
         {
             SelectedFriendId = id;
+            return null;
+        }
+
+        public ActionResult IsTargetTyping()
+        {
+            //TODO: 
+            if (true)
+                return Content("show=true");
+            return Content("");
+        }
+        public ActionResult IsTyping()
+        {
+            return null;
+        }
+        public ActionResult StopTyping()
+        {
+            return null;
+        }
+        public ActionResult Update(int id, string message)
+        {
+            return null;
+        }
+        public ActionResult Send(string message)
+        {
+            return null;
+        }
+        public ActionResult Delete(int idMessage)
+        {
+            //fonctionnera pas, requête sous forme /Chat/Delete/{id}
             return null;
         }
     }

@@ -39,7 +39,6 @@
 @section Scripts {
     <script defer>
         
-        console.log("a");
         let friendShipsStatus = new PartialRefresh("@Url.Action("GetFriendShipsStatus", "Friendships")", "friendshipsListContainer", 5, UpdatefriendShipsCallback);
         $('#Search').keypress(function (event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
