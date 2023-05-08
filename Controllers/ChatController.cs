@@ -13,5 +13,10 @@ namespace ChatManager.Controllers
         {
             return View();
         }
+        public ActionResult FriendList()
+        {
+
+        }
+        public ActionResult ChatWindow() { }
     }
 }
