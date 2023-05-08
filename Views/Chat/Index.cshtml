@@ -1,7 +1,64 @@
-﻿
+﻿@model ChatManager.Models.User
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Salle de discussions";
+    ViewBag.Icon = "/favicon.png";
+    ChatManager.Models.User user = (ChatManager.Models.User)ViewBag.User;
+    int selectedFriendId = -1;
 }
 
-<h2>Index</h2>
+<div style="display:grid; grid-template-columns: 65px auto; align-items:center">
+    <img class="visible-lg-inline" src="@ViewBag.Icon" style="width:56px" />
+    <h2 class="visible-lg-inline">@ViewBag.Title</h2>
+</div>
+<hr />
 
+<div style="display:grid; grid-template-columns:60px auto; column-gap:10px;">
+    <div class="friendsListContainer" id="friendsListContainer" title="Cliquez sur un de vos amis pour clavarder avec lui...">
+        @foreach (ChatManager.Models.User friend in user.Friends)
+        {
+            string isSelected = selectedFriendId == friend.Id ? "selectedTarget" : "unselectedTarget";
+
+            <div class="@isSelected">
+                <div>
+                    <div class="UserSmallAvatar" style="background: url(@friend.GetAvatarURL())" title="@friend.GetFullName()"></div>
+                </div>
+            </div>
+        }
+
+
+
+
+
+    </div>
+    <div>
+        <div class="messagesPanel" id="messagesPanel" title="Cliquez sur un de vos messages pour l'éditer...">
+            <div class="messagesHeader">
+                <h4>Conversation avec </h4>
+                <div class="userItem">
+                    <div class="UserMediumAvatar" style="background: url(/Images_Data/User_Avatars/21f83d97-67a7-4039-86f9-0c0aa0fbebea.Jpeg)"></div>
+                    <div class="ellipsis">Nicolas Chourot</div>
+                </div>
+            </div>
+
+            <div class="messageTime">
+                3 mai 2023 - 16:28
+            </div>
+            <div class="receivedLayout">
+                <div class="received" title="16:28">
+                    <span class="token">Salut!</span>
+
+                </div>
+            </div>
+            <div class="receivedLayout" id="typing" style="display: none;">
+                <img src="/Content/UI-icons/typing1.gif" style="width:40px; border-radius:8px" class="received">
+            </div>
+            <div style="height:40px;">&nbsp;</div>
+        </div>
+        <div class="sendMessageLayout">
+            <input id="message" class="form-control" style="width:100% !important; max-width:1000px !important;" placeholder="Tapez votre message ici ..." title="Les urls d'image sont prises en compte.">
+            <span id="send" class="icon fa fa-paper-plane" title="Envoyer" data-placement="bottom">
+            </span>
+
+        </div>
+    </div>
+</div>
