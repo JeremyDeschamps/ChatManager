@@ -27,5 +27,10 @@ namespace ChatManager.Controllers
             ViewBag.SelectedUserId = Session["selectedUserId"];
             return View();
         }
+        public ActionResult FriendList()
+        {
+
+        }
+        public ActionResult ChatWindow() { }
     }
 }
