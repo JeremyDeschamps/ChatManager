@@ -18,11 +18,16 @@
     </div>
 }
 
-@helper AvatarTooltip(ChatManager.Models.User user, string avatarClass = "UserMediumAvatar")
+@helper AvatarTooltip(ChatManager.Models.User user, string avatarClass = "UserMediumAvatar", bool notification = false)
 {
     var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
     var avatarUrl = Url.Content(user.GetAvatarURL());
-    <div class="@avatarClass" style="background: url(@avatarUrl)" title="@user.GetFullName()"></div>
+    <div class="@avatarClass" style="background: url(@avatarUrl)" title="@user.GetFullName()">
+        @if (notification)
+        {
+            <div class="newMessagesIndicator"></div>
+        }
+    </div>
 }
 @helper UsersCheckList(IEnumerable<ChatManager.Models.User> users, List<int> selectedUsers, string usersCheckListName = "UsersCheckList")
 {
@@ -481,4 +486,39 @@
     {
         throw new Exception("Le cas n'est pas compris dans les états possibles de la classe Friendships");
     }
+}
+
+@helper MessageTime(string time)
+{
+    <div class="messageTime">
+        @time
+    </div>
+}
+
+@helper ReceivedMessage(string time, string message)
+{
+    <div class="receivedLayout">
+        <div class="received" title="@time">
+            <span class="token">@message</span>
+        </div>
+    </div>
+}
+@helper TypingBubble(bool display = false)
+{
+    string displaying = display ? "" : "display: none";
+    <div class="receivedLayout" id="typing" style=@displaying>
+        <img src="/Content/UI-icons/typing1.gif" style="width:40px; border-radius:8px" class="received">
+    </div>
+}
+@helper SentMessage(string time, string message, bool seen = false)
+{
+    <div class="receivedLayout">
+        <div class="received" title="@time">
+            <span class="token">@message</span>
+        </div>
+        @if (seen)
+        {
+            <div class="readIndicator" title="Message lu"></div>
+        }
+    </div>
 }

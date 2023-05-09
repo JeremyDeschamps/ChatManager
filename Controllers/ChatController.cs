@@ -35,6 +35,7 @@ namespace ChatManager.Controllers
         }
         public PartialViewResult ChatWindow()
         {
+            ViewBag.Friend = DB.Users.FindUser(SelectedFriendId);
             return PartialView("ChatWindow");
         }
 
