@@ -27,7 +27,7 @@
             lastMessageDate = message.Date;
             if (message.Recipient == friend)
             {
-                @Helper.SentMessage(message.StrTime, message.Body, message.Seen);
+                @Helper.SentMessage(message.StrTime, message.Body, message.Id, message.Seen);
             }
             else 
             { 

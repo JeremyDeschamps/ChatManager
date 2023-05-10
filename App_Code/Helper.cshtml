@@ -508,15 +508,25 @@
         <img src="/Content/UI-icons/typing1.gif" style="width:40px; border-radius:8px" class="received">
     </div>
 }
-@helper SentMessage(string time, string message, bool seen = false)
+@helper SentMessage(string time, string message, int id, bool seen = false)
 {
     <div class="sentLayout">
-        <div class="sent" title="@time">
+        <div class="sent" title="@time" id="sent_@id">
             @Helper.ParseContent(message)
         </div>
         @if (seen)
         {
             <div class="readIndicator" title="Message lu"></div>
         }
+    </div>
+    <div class="editMessage" id="edit_@id" style="display: none;">
+
+        <input id="@id" value="@message" class="sent form-control">
+        <span id="update_@id" class="icon fa fa-check smallerIcon" title="Modifier ce message" data-placement="bottom">
+        </span>
+
+        <span id="delete_@id" class="icon fa fa-times smallerIcon" title="Effacer ce message" data-placement="bottom">
+        </span>
+
     </div>
 }
