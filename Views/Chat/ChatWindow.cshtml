@@ -16,8 +16,15 @@
     </div>
     @if (friend != null)
     {
+        DateTime lastMessageDate = new DateTime();
         foreach(var message in Model)
         {
+            TimeSpan ts = message.Date - lastMessageDate;
+            if (ts.TotalMinutes >= 30)
+            {
+                @Helper.MessageTime(message.StrDate);
+            }
+            lastMessageDate = message.Date;
             if (message.Recipient == friend)
             {
                 @Helper.SentMessage(message.StrTime, message.Body, message.Seen);

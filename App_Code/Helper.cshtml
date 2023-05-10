@@ -490,9 +490,7 @@
 
 @helper MessageTime(string time)
 {
-    <div class="messageTime">
-        @time
-    </div>
+    <div class="messageTime">@time</div>
 }
 
 @helper ReceivedMessage(string time, string message)
@@ -512,8 +510,8 @@
 }
 @helper SentMessage(string time, string message, bool seen = false)
 {
-    <div class="receivedLayout">
-        <div class="received" title="@time">
+    <div class="sentLayout">
+        <div class="sent" title="@time">
             @Helper.ParseContent(message)
         </div>
         @if (seen)
