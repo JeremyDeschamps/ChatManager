@@ -114,16 +114,16 @@ namespace ChatManager.Models
         [JsonIgnore]
         public List<Friendships> Friendships { get => DB.Friendships.ToList().Where(f => f.IdUser1 == Id || f.IdUser2 == Id).ToList(); }
         [JsonIgnore]
-        public List<User> Friends
+        public List<User> UsersWithFriendships
         {
             get
             {
                 List<User> friends = new List<User>();
                 foreach (var friendships in Friendships)
                 {
-                    if(friendships.User1 == this)
+                    if (friendships.User1 == this)
                     {
-                       friends.Add(friendships.User2);
+                        friends.Add(friendships.User2);
                     }
                     else
                     {
@@ -133,5 +133,12 @@ namespace ChatManager.Models
                 return friends.OrderBy(f => f.FirstName).ToList();
             }
         }
+
+        [JsonIgnore]
+        public List<Message> MessagesShared { get => DB.Messages.ToList().Where(m => m.IdRecipient == Id || m.IdSender == Id).ToList(); }
+
+        public List<Message> MessagesSharedWith(int userId) => MessagesShared.ToList().Where(m => m.IdRecipient == userId || m.IdSender == userId).ToList();
     }
 }
+
+

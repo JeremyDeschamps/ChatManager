@@ -113,9 +113,9 @@ namespace ChatManager.Controllers
         {
             User CurrentUser = OnlineUsers.GetSessionUser();
 
-            if(CurrentUser.StatusWith(CurrentUser.Friends.Find(u => u.Id == id)) != null)
+            if(CurrentUser.StatusWith(CurrentUser.UsersWithFriendships.Find(u => u.Id == id)) != null)
             {
-                Friendships friendship = CurrentUser.StatusWith(CurrentUser.Friends.Find(u => u.Id == id));
+                Friendships friendship = CurrentUser.StatusWith(CurrentUser.UsersWithFriendships.Find(u => u.Id == id));
                 DB.Friendships.Delete(friendship.Id);
             }
             
@@ -126,26 +126,27 @@ namespace ChatManager.Controllers
         public ActionResult AcceptFriendRequest(int id)
         {
             User CurrentUser = OnlineUsers.GetSessionUser();
-            Friendships friendship = CurrentUser.StatusWith(CurrentUser.Friends.Find(u => u.Id == id));
+            Friendships friendship = CurrentUser.StatusWith(CurrentUser.UsersWithFriendships.Find(u => u.Id == id));
             friendship.Accepted = true;
             friendship.Pending = false;
             DB.Friendships.Update(friendship);
-
+            OnlineUsers.AddNotification(id, $"{CurrentUser.GetFullName()} est maintenant votre ami!");
             return RedirectToAction("Index");
         }
         public ActionResult DenyFriendRequest(int id)
         {
             User CurrentUser = OnlineUsers.GetSessionUser();
-            Friendships friendship = CurrentUser.StatusWith(CurrentUser.Friends.Find(u => u.Id == id));
+            Friendships friendship = CurrentUser.StatusWith(CurrentUser.UsersWithFriendships.Find(u => u.Id == id));
             friendship.Denied = true;
             friendship.Pending = false;
             DB.Friendships.Update(friendship);
+            OnlineUsers.AddNotification(id, $"{CurrentUser.GetFullName()} a refusé votre demande d'ami!");
             return RedirectToAction("Index");
         }
         public ActionResult RemoveFriend(int id)
         {
             User CurrentUser = OnlineUsers.GetSessionUser();
-            Friendships friendship = CurrentUser.StatusWith(CurrentUser.Friends.Find(u => u.Id == id));
+            Friendships friendship = CurrentUser.StatusWith(CurrentUser.UsersWithFriendships.Find(u => u.Id == id));
             DB.Friendships.Delete(friendship.Id);
             return RedirectToAction("Index");
         }
@@ -164,18 +165,17 @@ namespace ChatManager.Controllers
             FilterSearch = text;
             return null;
         }
+
         Func<User, User, bool> FilterNotFriendF = (user, currentUser) =>
         {
             Friendships status = currentUser.StatusWith(user);
             return status == null || (status.Denied && status.IsSender(user));
         };
-
         Func<User, User, bool> FilterRequestF = (user, currentUser) =>
         {
             Friendships status = currentUser.StatusWith(user);
             return status != null && status.Pending && status.IsSender(user);
         };
-
         Func<User, User, bool> FilterPendingF = (user, currentUser) =>
         {
             Friendships status = currentUser.StatusWith(user);
@@ -191,7 +191,6 @@ namespace ChatManager.Controllers
             Friendships status = currentUser.StatusWith(user);
             return status != null && status.Denied;
         };
-
 
         private List<User> ApplyFilters(IEnumerable<User> users)
         {

@@ -31,7 +31,7 @@ namespace ChatManager.Controllers
             User user = OnlineUsers.GetSessionUser();
             ViewBag.User = user;
             ViewBag.SelectedFriendId = SelectedFriendId;
-            return PartialView("FriendList", user.Friends.FindAll(u => u.StatusWith(user).Accepted));
+            return PartialView("FriendList", user.UsersWithFriendships.FindAll(u => u.StatusWith(user).Accepted));
         }
         public PartialViewResult ChatWindow()
         {
