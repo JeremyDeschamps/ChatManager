@@ -75,9 +75,9 @@ namespace ChatManager.Controllers
             DB.Messages.Add(new Message { Body = message, IdSender = CurrentUser.Id, IdRecipient = SelectedFriendId, Seen = false, Date = DateTime.Now });
             return null;
         }
-        public ActionResult Delete(int idMessage)
+        public ActionResult Delete(int id)
         {
-            DB.Messages.Delete(idMessage);
+            DB.Messages.Delete(id);
             return null;
         }
     }
