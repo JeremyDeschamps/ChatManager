@@ -363,3 +363,9 @@ MigrationBackup/
 FodyWeavers.xsd
 /App_Data/Logins.json
 /App_Data/Friendships.json
+/App_Data/Messages.json
+/App_Data/UserTypes.json
+/App_Data/Users.json
+/App_Data/UnverifiedEmails.json
+/App_Data/ResetPasswordCommands.json
+/App_Data/Genders.json
