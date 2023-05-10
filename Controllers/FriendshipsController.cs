@@ -130,6 +130,7 @@ namespace ChatManager.Controllers
             friendship.Accepted = true;
             friendship.Pending = false;
             DB.Friendships.Update(friendship);
+
             return RedirectToAction("Index");
         }
         public ActionResult DenyFriendRequest(int id)

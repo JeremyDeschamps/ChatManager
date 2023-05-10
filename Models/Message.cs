@@ -15,8 +15,8 @@ namespace ChatManager.Models
         public int IdRecipient { get; set; }
 
         public bool Seen { get; set; }
-        public string Body { get; set; }
 
+        public string Body { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -28,8 +28,6 @@ namespace ChatManager.Models
 
         [JsonIgnore]
         public User Recipient {get => DB.Users.FindUser(IdRecipient); }
-
-
-        public bool IsSender(User user) => user.Id == idSender;
+        public bool IsSender(User user) => user.Id == IdSender;
     }
 }
