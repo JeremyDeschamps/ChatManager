@@ -62,15 +62,21 @@ namespace ChatManager.Controllers
         }
         public ActionResult Update(int id, string message)
         {
+            User CurrentUser = OnlineUsers.GetSessionUser();
+            Message newMessage = CurrentUser.MessagesSharedWith(SelectedFriendId).Find(m => m.Id == id);
+            newMessage.Body = message;
+            DB.Messages.Update(newMessage);
             return null;
         }
         public ActionResult Send(string message)
         {
+            User CurrentUser = OnlineUsers.GetSessionUser();
+            DB.Messages.Add(new Message { Body = message, IdSender = CurrentUser.Id, IdRecipient = SelectedFriendId, Seen = false, Date = DateTime.Now });
             return null;
         }
         public ActionResult Delete(int idMessage)
         {
-            //fonctionnera pas, requête sous forme /Chat/Delete/{id}
+            DB.Messages.Delete(idMessage);
             return null;
         }
     }
