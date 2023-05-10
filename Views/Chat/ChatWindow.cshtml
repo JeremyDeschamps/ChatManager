@@ -1,19 +1,33 @@
-﻿
-@{
-    ViewBag.Title = "ChatWindow";
-    var friend = (ChatManager.Models.User)ViewBag.Friend;
-}
-<div class="messagesHeader">
-    @if (friend == null)
+﻿@model IEnumerable<ChatManager.Models.Message>
+    @{
+        ViewBag.Title = "ChatWindow";
+        var friend = (ChatManager.Models.User)ViewBag.Friend;
+    }
+    <div class="messagesHeader">
+        @if (friend == null)
+        {
+            <h4>Sélectionnez un ami...</h4>
+        }
+        else
+        {
+            <h4>Conversation avec </h4>
+            @Helper.AvatarUser(friend)
+        }
+    </div>
+    @if (friend != null)
     {
-        <h4>Sélectionnez un ami...</h4>
+        foreach(var message in Model)
+        {
+            if (message.Recipient == friend)
+            {
+                @Helper.SentMessage(message.StrTime, message.Body, message.Seen);
+            }
+            else 
+            { 
+                @Helper.ReceivedMessage(message.StrTime, message.Body)
+            }
+        }
     }
-    else
-    { 
-        <h4>Conversation avec </h4>
-        @Helper.AvatarUser(friend)
-    }
-</div>
-@* afficher les différents types de helpers dépendant des messages *@
-@Helper.TypingBubble(true)
-<div style="height:40px;">&nbsp;</div>
+    @* afficher les différents types de helpers dépendant des messages *@
+    @Helper.TypingBubble(true)
+    <div style="height:40px;">&nbsp;</div>

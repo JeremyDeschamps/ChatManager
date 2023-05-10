@@ -499,7 +499,7 @@
 {
     <div class="receivedLayout">
         <div class="received" title="@time">
-            <span class="token">@message</span>
+            @Helper.ParseContent(message)
         </div>
     </div>
 }
@@ -514,7 +514,7 @@
 {
     <div class="receivedLayout">
         <div class="received" title="@time">
-            <span class="token">@message</span>
+            @Helper.ParseContent(message)
         </div>
         @if (seen)
         {

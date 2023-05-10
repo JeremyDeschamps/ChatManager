@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace ChatManager.Models
@@ -22,6 +23,7 @@ namespace ChatManager.Models
 
         [JsonIgnore]
         public string StrDate { get => Date.ToString("d MMMM yyyy - H:mm"); }
+        public string StrTime { get => Date.ToString("H:mm"); }
 
         [JsonIgnore]
         public User Sender {get => DB.Users.FindUser(IdSender); }

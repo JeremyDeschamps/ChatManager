@@ -36,7 +36,10 @@ namespace ChatManager.Controllers
         public PartialViewResult ChatWindow()
         {
             ViewBag.Friend = DB.Users.FindUser(SelectedFriendId);
-            return PartialView("ChatWindow");
+            if (SelectedFriendId == -1)
+                return PartialView("ChatWindow");
+            User user = OnlineUsers.GetSessionUser();
+            return PartialView("ChatWindow", user.MessagesSharedWith(SelectedFriendId));
         }
 
         public ActionResult SetCurrentTarget(int id)

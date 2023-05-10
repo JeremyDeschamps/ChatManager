@@ -5,12 +5,5 @@ using System.Web;
 
 namespace ChatManager.Models
 {
-    public class MessageRepository : Repository<Message>
-    {
-
-
-
-
-
-    }
+    public class MessageRepository : Repository<Message>{ }
 }

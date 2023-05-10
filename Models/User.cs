@@ -138,6 +138,12 @@ namespace ChatManager.Models
         public List<Message> MessagesShared { get => DB.Messages.ToList().Where(m => m.IdRecipient == Id || m.IdSender == Id).ToList(); }
 
         public List<Message> MessagesSharedWith(int userId) => MessagesShared.ToList().Where(m => m.IdRecipient == userId || m.IdSender == userId).ToList();
+
+        public bool HasNotificationsFrom(int userId)
+        {
+            var lastMessage = MessagesSharedWith(userId).LastOrDefault();
+            return lastMessage != null && !lastMessage.Seen;
+        } 
     }
 }
 

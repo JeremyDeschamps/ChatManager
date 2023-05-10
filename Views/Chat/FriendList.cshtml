@@ -9,6 +9,6 @@
     string isSelected = selectedFriendId == friend.Id ? "selectedTarget" : "unselectedTarget";
 
     <div class="@isSelected" data-userid="@friend.Id">
-        @Helper.AvatarTooltip(friend, "UserSmallAvatar")
+        @Helper.AvatarTooltip(friend, "UserSmallAvatar", user.HasNotificationsFrom(friend.Id))
     </div>
 }
