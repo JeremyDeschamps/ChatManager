@@ -1,0 +1,22 @@
+﻿@model  IEnumerable<ChatManager.Models.Message>
+
+<div class="container"></div>
+@foreach (var message in Model)
+{
+    <div style="display:grid; grid-template-columns:35px 35px 35px 300px; column-gap:25px;">
+        <div style="display:inline-block; align-self: center">
+            @Helper.AvatarTooltip(message.Sender)
+        </div>
+        <div style="display:inline-block; align-self: center">
+            @Helper.AvatarTooltip(message.Recipient)
+        </div>
+        <div style="display:inline-block; align-self: center">
+            @Helper.IconConfirmCmdAjaxWithParam("Chat", "Delete", new { message.Id }, "fa-circle-xmark", "Effacer ce message?")
+        </div>
+
+        <div class="sent" title="@message.StrTime" style="overflow-wrap: break-word;">
+            @Helper.ParseContent(message.Body)
+        </div>
+    </div>
+}
+

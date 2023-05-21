@@ -169,6 +169,19 @@
         </span>
     </div>
 }
+
+@helper IconConfirmCmdAjaxWithParam(string controller, string Action, object extraparam, string icon_class, string TooltipMessage, string ToolTipPlacement = "bottom")
+{
+    //// http://bootboxjs.com/documentation.html#bb-confirm
+    var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+    <div onclick='bootbox.confirm("@TooltipMessage", function(result){ if (result) ajaxActionCall("@Url.Action(Action,controller, extraparam)") })'>
+        <span class="icon fa @icon_class"
+              title="@TooltipMessage"
+              data-placement="@ToolTipPlacement">
+        </span>
+    </div>
+}
+
 @helper ListToRadioButtonGroup(string name, System.Web.Mvc.SelectList options, int selectedValue)
 {
     <div class="RadioButtonsGroup">
@@ -511,7 +524,7 @@
 @helper SentMessage(string time, string message, int id, bool seen = false)
 {
     <div class="sentLayout">
-        <div class="sent" title="@time" id="sent_@id">
+        <div class="sent" title="@time" id="sent_@id" style="overflow-wrap: break-word;">
             @Helper.ParseContent(message)
         </div>
         @if (seen)

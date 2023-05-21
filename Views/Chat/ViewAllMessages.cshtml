@@ -1,0 +1,22 @@
+﻿
+
+<h2>Conversations</h2>
+<hr />
+<div id="messages"></div>
+
+@section Scripts {
+    <script defer>
+
+        let messagesUpdater = new PartialRefresh("/Chat/GetAllMessages", "messages", 5);
+        function ajaxActionCall(actionLink, callback = null) {
+            // Ajax Action Call to actionLink
+            $.ajax({
+                url: actionLink,
+                method: 'GET',
+                success: () => {
+                    if (callback != null) callback();
+                }
+            });
+        }
+    </script>
+}

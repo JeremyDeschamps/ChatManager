@@ -109,6 +109,7 @@ namespace ChatManager.Controllers
         {
             return View();
         }
+        [OnlineUsers.UserAccess]
         public ActionResult SendFriendRequest(int id) 
         {
             User CurrentUser = OnlineUsers.GetSessionUser();
@@ -123,6 +124,7 @@ namespace ChatManager.Controllers
            
             return RedirectToAction("Index");
         }
+        [OnlineUsers.UserAccess]
         public ActionResult AcceptFriendRequest(int id)
         {
             User CurrentUser = OnlineUsers.GetSessionUser();
@@ -133,6 +135,7 @@ namespace ChatManager.Controllers
             OnlineUsers.AddNotification(id, $"{CurrentUser.GetFullName()} est maintenant votre ami!");
             return RedirectToAction("Index");
         }
+        [OnlineUsers.UserAccess]
         public ActionResult DenyFriendRequest(int id)
         {
             User CurrentUser = OnlineUsers.GetSessionUser();
@@ -143,6 +146,7 @@ namespace ChatManager.Controllers
             OnlineUsers.AddNotification(id, $"{CurrentUser.GetFullName()} a refusé votre demande d'ami!");
             return RedirectToAction("Index");
         }
+        [OnlineUsers.UserAccess]
         public ActionResult RemoveFriend(int id)
         {
             User CurrentUser = OnlineUsers.GetSessionUser();
@@ -160,6 +164,7 @@ namespace ChatManager.Controllers
             }
             return null;
         }
+        [OnlineUsers.UserAccess]
         public ActionResult Search(string text = "")
         {
             FilterSearch = text;
@@ -211,31 +216,37 @@ namespace ChatManager.Controllers
                 users = users.Where(user => user.GetFullName().Contains(FilterSearch));
             return users.ToList();
         }
+        [OnlineUsers.UserAccess]
         public ActionResult SetFilterNotFriend(bool check = false)
         {
             FilterNotFriend = check;
             return null;
         }
+        [OnlineUsers.UserAccess]
         public ActionResult SetFilterRequest(bool check = false)
         {
             FilterRequest = check;
             return null;
         }
+        [OnlineUsers.UserAccess]
         public ActionResult SetFilterPending(bool check = false)
         {
             FilterPending = check;
             return null;
         }
+        [OnlineUsers.UserAccess]
         public ActionResult SetFilterFriend(bool check = false)
         {
             FilterFriend = check;
             return null;
         }
+        [OnlineUsers.UserAccess]
         public ActionResult SetFilterRefused(bool check = false)
         {
             FilterRefused = check;
             return null;
         }
+        [OnlineUsers.UserAccess]
         public ActionResult SetFilterBlocked(bool check = false)
         {
             FilterBlocked = check;

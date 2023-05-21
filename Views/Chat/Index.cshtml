@@ -2,10 +2,19 @@
 @{
     ViewBag.Title = "Salle de discussions";
     ViewBag.Icon = "/favicon.png";
+    bool isAdmin = ViewBag.IsAdmin;
+
 }
 
 <div style="display:grid; grid-template-columns: 65px auto; align-items:center">
-    <img class="visible-lg-inline" src="@ViewBag.Icon" style="width:56px" />
+    @if (isAdmin)
+    {
+        <a href="/Chat/ViewAllMessages" title="Voir tout les messages..."><img class="visible-lg-inline" src="@ViewBag.Icon" style="width:56px"/></a>
+    }
+    else 
+    { 
+        <img class="visible-lg-inline" src="@ViewBag.Icon" style="width:56px" />
+    }
     <h2 class="visible-lg-inline">@ViewBag.Title</h2>
 </div>
 <hr />

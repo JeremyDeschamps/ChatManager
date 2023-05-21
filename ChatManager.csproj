@@ -274,6 +274,8 @@
     <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Views\Chat\FriendList.cshtml" />
     <Content Include="Views\Chat\ChatWindow.cshtml" />
+    <Content Include="Views\Chat\ViewAllMessages.cshtml" />
+    <Content Include="Views\Chat\AllMessages.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
