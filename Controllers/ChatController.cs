@@ -20,7 +20,6 @@ namespace ChatManager.Controllers
             }
             set => Session["selectedFriendId"] = value;
         }
-
         [OnlineUsers.UserAccess]
         public ActionResult Index()
         {
@@ -88,6 +87,7 @@ namespace ChatManager.Controllers
         public ActionResult Delete(int id)
         {
             DB.Messages.Delete(id);
+            
             return null;
         }
         [OnlineUsers.AdminAccess]
@@ -96,10 +96,12 @@ namespace ChatManager.Controllers
             return View();
         }
         [OnlineUsers.AdminAccess]
-        public PartialViewResult GetAllMessages(bool forceRefresh = false)
+        public ActionResult GetAllMessages(bool forceRefresh = false)
         {
-            if (forceRefresh || DB.Friendships.HasChanged)
+            if (forceRefresh || DB.Messages.HasChanged)
+            {
                 return PartialView("AllMessages", DB.Messages.ToList().OrderBy(message => message.Date).Reverse());
+            }
             return null;
         }
     }

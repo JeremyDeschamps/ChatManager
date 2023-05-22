@@ -312,7 +312,7 @@ namespace ChatManager.Controllers
                 RedirectToAction("UserList");
             }
             ViewBag.UserType = SelectListUtilities<UserType>.Convert(DB.UserTypes.ToList());
-            return View();
+            return View(user);
         }
 
         #endregion
