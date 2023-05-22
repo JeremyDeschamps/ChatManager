@@ -154,7 +154,7 @@ namespace ChatManager.Controllers
             DB.Friendships.Delete(friendship.Id);
             return RedirectToAction("Index");
         }
-        [OnlineUsers.UserAccess]
+        [OnlineUsers.UserAccess(false)]
         public PartialViewResult GetFriendShipsStatus(bool forceRefresh = false)
         {
             if (forceRefresh || DB.Friendships.HasChanged)

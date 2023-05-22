@@ -27,20 +27,24 @@ namespace ChatManager.Controllers
             ViewBag.IsAdmin = OnlineUsers.GetSessionUser().IsAdmin;
             return View();
         }
-        [OnlineUsers.UserAccess]
-        public PartialViewResult FriendList()
+        [OnlineUsers.UserAccess(false)]
+        public ActionResult FriendList()
         {
             User user = OnlineUsers.GetSessionUser();
             ViewBag.User = user;
             ViewBag.SelectedFriendId = SelectedFriendId;
             return PartialView("FriendList", user.UsersWithFriendships.FindAll(u => u.StatusWith(user).Accepted));
         }
-        [OnlineUsers.UserAccess]
-        public PartialViewResult ChatWindow()
+        [OnlineUsers.UserAccess(false)]
+        public ActionResult ChatWindow(bool forceRefresh = false)
         {
-            ViewBag.Friend = DB.Users.FindUser(SelectedFriendId);
-            User user = OnlineUsers.GetSessionUser();
-            return PartialView("ChatWindow", user.MessagesSharedWith(SelectedFriendId));
+            if (forceRefresh || DB.Messages.HasChanged)
+            {
+                ViewBag.Friend = DB.Users.FindUser(SelectedFriendId);
+                User user = OnlineUsers.GetSessionUser();
+                return PartialView("ChatWindow", user.MessagesSharedWith(SelectedFriendId));
+            }
+            return null;
         }
         [OnlineUsers.UserAccess]
         public ActionResult SetCurrentTarget(int id)
@@ -95,10 +99,10 @@ namespace ChatManager.Controllers
         {
             return View();
         }
-        [OnlineUsers.AdminAccess]
-        public PartialViewResult GetAllMessages(bool forceRefresh = false)
+        [OnlineUsers.AdminAccess(false)]
+        public ActionResult GetAllMessages(bool forceRefresh = false)
         {
-            if (forceRefresh || DB.Friendships.HasChanged)
+            if (forceRefresh || DB.Messages.HasChanged)
                 return PartialView("AllMessages", DB.Messages.ToList().OrderBy(message => message.Date).Reverse());
             return null;
         }
