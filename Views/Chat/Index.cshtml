@@ -9,13 +9,13 @@
 <div style="display:grid; grid-template-columns: 65px auto; align-items:center">
     @if (isAdmin)
     {
-        <a href="/Chat/ViewAllMessages" title="Voir tout les messages..."><img class="visible-lg-inline" src="@ViewBag.Icon" style="width:56px"/></a>
+        <a href="/Chat/ViewAllMessages" title="Voir tout les messages..."><img src="@ViewBag.Icon" style="width:56px"/></a>
     }
     else 
     { 
-        <img class="visible-lg-inline" src="@ViewBag.Icon" style="width:56px" />
+        <img src="@ViewBag.Icon" style="width:56px" />
     }
-    <h2 class="visible-lg-inline">@ViewBag.Title</h2>
+    <h3>@ViewBag.Title</h3>
 </div>
 <hr />
 
@@ -25,7 +25,7 @@
     <div>
         <div class="messagesPanel" id="messagesPanel" title="Cliquez sur un de vos messages pour l'éditer...">
         </div>
-        <div class="sendMessageLayout">
+        <div class="sendMessageLayout" id="sendMessageForm" style="display: none">
             <input id="message" class="form-control" style="width:100% !important; max-width:1000px !important;" placeholder="Tapez votre message ici ..." title="Les urls d'image sont prises en compte.">
             <span id="send" class="icon fa fa-paper-plane" title="Envoyer" data-placement="bottom">
             </span>

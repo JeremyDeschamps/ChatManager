@@ -1,40 +1,43 @@
 ﻿@model IEnumerable<ChatManager.Models.Message>
-    @{
-        ViewBag.Title = "ChatWindow";
-        var friend = (ChatManager.Models.User)ViewBag.Friend;
+@{
+    ViewBag.Title = "ChatWindow";
+    var friend = (ChatManager.Models.User)ViewBag.Friend;
+}
+<div class="messagesHeader">
+    @if (friend == null)
+    {
+        <h4>Sélectionnez un ami...</h4>
     }
-    <div class="messagesHeader">
-        @if (friend == null)
+    else
+    {
+        <h4>Conversation avec </h4>
+        @Helper.AvatarUser(friend)
+    }
+</div>
+@if (friend != null)
+{
+    DateTime lastMessageDate = new DateTime();
+    foreach (var message in Model)
+    {
+        TimeSpan ts = message.Date - lastMessageDate;
+        if (ts.TotalMinutes >= 30)
         {
-            <h4>Sélectionnez un ami...</h4>
+            @Helper.MessageTime(message.StrDate);
+        }
+        lastMessageDate = message.Date;
+        if (message.Recipient == friend)
+        {
+            @Helper.SentMessage(message.StrTime, message.Body, message.Id, message.Seen);
         }
         else
         {
-            <h4>Conversation avec </h4>
-            @Helper.AvatarUser(friend)
-        }
-    </div>
-    @if (friend != null)
-    {
-        DateTime lastMessageDate = new DateTime();
-        foreach(var message in Model)
-        {
-            TimeSpan ts = message.Date - lastMessageDate;
-            if (ts.TotalMinutes >= 30)
-            {
-                @Helper.MessageTime(message.StrDate);
-            }
-            lastMessageDate = message.Date;
-            if (message.Recipient == friend)
-            {
-                @Helper.SentMessage(message.StrTime, message.Body, message.Id, message.Seen);
-            }
-            else 
-            { 
-                @Helper.ReceivedMessage(message.StrTime, message.Body)
-            }
+            @Helper.ReceivedMessage(message.StrTime, message.Body)
         }
     }
-    @* afficher les différents types de helpers dépendant des messages *@
-    @Helper.TypingBubble(true)
-    <div style="height:40px;">&nbsp;</div>
+    <script>
+        document.getElementById("sendMessageForm").style.removeProperty("display");
+    </script>
+}
+@* afficher les différents types de helpers dépendant des messages *@
+@Helper.TypingBubble(true)
+<div style="height:40px;">&nbsp;</div>

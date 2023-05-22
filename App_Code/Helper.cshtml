@@ -174,7 +174,13 @@
 {
     //// http://bootboxjs.com/documentation.html#bb-confirm
     var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
-    <div onclick='bootbox.confirm("@TooltipMessage", function(result){ if (result) ajaxActionCall("@Url.Action(Action,controller, extraparam)") })'>
+    <div onclick='bootbox.confirm("@TooltipMessage", function (result) {
+        if (result)
+        {
+            ajaxActionCall("@Url.Action(Action,controller, extraparam)");
+            messagesUpdater.refresh(true);
+        }
+    })'>
         <span class="icon fa @icon_class"
               title="@TooltipMessage"
               data-placement="@ToolTipPlacement">

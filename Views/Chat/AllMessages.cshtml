@@ -11,7 +11,7 @@
             @Helper.AvatarTooltip(message.Recipient)
         </div>
         <div style="display:inline-block; align-self: center">
-            @Helper.IconConfirmCmdAjaxWithParam("Chat", "Delete", new { message.Id }, "fa-circle-xmark", "Effacer ce message?")
+            @Helper.IconConfirmCmdAjaxWithParam("Chat", "Delete", new { message.Id }, "fa-times-circle", "Effacer ce message?")
         </div>
 
         <div class="sent" title="@message.StrTime" style="overflow-wrap: break-word;">

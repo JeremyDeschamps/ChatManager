@@ -216,6 +216,7 @@
     <Content Include="App_Data\Friendships.json" />
     <Content Include="App_Data\Messages.json" />
     <None Include="Properties\PublishProfiles\ChatManager2023 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\ChatManagerALJD - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\MDB2023 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\MDB2023 - Web Deploy1.pubxml" />
     <None Include="Properties\PublishProfiles\MoviesRepository - Web Deploy.pubxml" />
