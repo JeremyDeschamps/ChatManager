@@ -304,6 +304,7 @@ namespace ChatManager.Controllers
             if(ModelState.IsValid)
             {
                 User AncientUser = DB.Users.FindUser(user.Id);
+                user.Avatar = AncientUser.Avatar;
                 user.Password = AncientUser.Password;
                 user.GenderId = AncientUser.GenderId;
                 user.ConfirmPassword = AncientUser.ConfirmPassword;
