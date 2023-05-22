@@ -17,7 +17,17 @@
         <div class="ellipsis">@user.GetFullName()</div>
     </div>
 }
+@helper AvatarModifLink(ChatManager.Models.User user, string avatarClass = "UserMediumAvatar")
+{
+    var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+    var avatarUrl = Url.Content(user.GetAvatarURL());
+    var linkUrl = Url.Action("ModifProfil", "Accounts");
 
+    <div class="userItem">
+        <div class="@avatarClass" style="background: url(@avatarUrl)"></div>
+        <a href="@linkUrl/@user.Id"><div class="ellipsis">@user.GetFullName()</div></a>
+    </div>
+}
 @helper AvatarTooltip(ChatManager.Models.User user, string avatarClass = "UserMediumAvatar", bool notification = false)
 {
     var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);

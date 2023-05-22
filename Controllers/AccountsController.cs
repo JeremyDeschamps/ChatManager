@@ -292,6 +292,29 @@ namespace ChatManager.Controllers
             ViewBag.Genders = SelectListUtilities<Gender>.Convert(DB.Genders.ToList());
             return View(currentUser);
         }
+        public ActionResult ModifProfil(int id)
+        {
+            User user = DB.Users.FindUser(id);
+            ViewBag.UserType = SelectListUtilities<UserType>.Convert(DB.UserTypes.ToList());
+            return View(user);
+        }
+        [HttpPost]
+        public ActionResult ModifProfil(User user)
+        {
+            if(ModelState.IsValid)
+            {
+                User AncientUser = DB.Users.FindUser(user.Id);
+                user.Password = AncientUser.Password;
+                user.GenderId = AncientUser.GenderId;
+                user.ConfirmPassword = AncientUser.ConfirmPassword;
+                user.CreationDate = AncientUser.CreationDate;
+                DB.Users.Update(user);
+                RedirectToAction("UserList");
+            }
+            ViewBag.UserType = SelectListUtilities<UserType>.Convert(DB.UserTypes.ToList());
+            return View();
+        }
+
         #endregion
 
         #region Login and Logout
