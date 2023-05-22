@@ -103,6 +103,7 @@ namespace ChatManager.Controllers
         public ActionResult GetAllMessages(bool forceRefresh = false)
         {
             if (forceRefresh || DB.Messages.HasChanged)
+            { 
                 return PartialView("AllMessages", DB.Messages.ToList().OrderBy(message => message.Date).Reverse());
             }
             return null;

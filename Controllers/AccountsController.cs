@@ -310,7 +310,7 @@ namespace ChatManager.Controllers
                 user.ConfirmPassword = AncientUser.ConfirmPassword;
                 user.CreationDate = AncientUser.CreationDate;
                 DB.Users.Update(user);
-                RedirectToAction("UserList");
+                return RedirectToAction("UserList");
             }
             ViewBag.UserType = SelectListUtilities<UserType>.Convert(DB.UserTypes.ToList());
             return View(user);
