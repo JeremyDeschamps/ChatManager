@@ -49,7 +49,6 @@
         let messagesPanelUpdater = new PartialRefresh("/Chat/ChatWindow", "messagesPanel", 5, UpdateMessagesCallback);
 
         function UpdateFriendsCallback() {
-            messagesPanelUpdater.refresh(true);
             $(".unselectedTarget").click(function () {
                 var userId = $(this).attr("data-userid");
                 ajaxActionCall("/Chat/SetCurrentTarget/" + userId, () => { friendsPanelUpdater.refresh(true); messagesPanelUpdater.refresh(true); });
