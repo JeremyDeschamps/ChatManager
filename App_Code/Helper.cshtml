@@ -524,7 +524,7 @@
 @helper ReceivedMessage(string time, string message)
 {
     <div class="receivedLayout">
-        <div class="received" title="@time">
+        <div class="received" title="@time" style="overflow-wrap: break-word;">
             @Helper.ParseContent(message)
         </div>
     </div>
